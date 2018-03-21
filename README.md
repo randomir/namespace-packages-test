@@ -1,5 +1,8 @@
-The goal of this repo is to test several hypothesis about namespace packages in
-Python 2, and more importantly in Python 3.
+# Namespace packages: battle-testing
+
+The goal of this repo is to test several hypotheses about namespace packages and
+their usage in real-life scenarios. Tests are focused on Python 3, but for
+completeness we run them in Python 2, too.
 
 Different approaches for creating namespace packages are covered in PyPA's
 [Packaging namespace packages](https://packaging.python.org/guides/packaging-namespace-packages/)
@@ -14,3 +17,8 @@ test the following claims:
  - all stem `__init__.py` must be empty
  - uninstalls break the namespace
  - developer installs might not work effectively
+
+## Running tests
+
+    $ pip install -r requirements.txt
+    $ nox
