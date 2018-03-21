@@ -1,1 +1,1 @@
-pytest
+nox-automation
