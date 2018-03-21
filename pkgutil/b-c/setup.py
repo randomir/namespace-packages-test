@@ -1,4 +1,10 @@
+import sys
 from setuptools import setup
+
+packages = ['root.b.c']
+
+if sys.version_info.major == 2:
+    packages += ['root', 'root.b']
 
 setup(
     name='root-b-c',
@@ -6,6 +12,6 @@ setup(
     description='Namespace package two levels below root.',
     author='Radomir Stevanovic',
     author_email='radomir@dwavesys.com',
-    packages=['root.b.c'],
+    packages=packages,
     zip_safe=False,
 )
