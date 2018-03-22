@@ -22,3 +22,15 @@ test the following claims:
 
     $ pip install -r requirements.txt
     $ nox
+
+## Preliminary results
+
+    nox > Ran multiple sessions:
+    nox > * test_native(interpreter='python2'): failed
+    nox > * test_native(interpreter='python3'): success
+    nox > * test_pkgutil_mixed_levels(interpreter='python2'): failed
+    nox > * test_pkgutil_mixed_levels(interpreter='python3'): success
+    nox > * test_pkgutil_same_level_only(interpreter='python2'): success
+    nox > * test_pkgutil_same_level_only(interpreter='python3'): success
+    nox > * test_pkgutil_non_clashing_levels(interpreter='python2'): success
+    nox > * test_pkgutil_non_clashing_levels(interpreter='python3'): success
