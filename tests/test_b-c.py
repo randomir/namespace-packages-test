@@ -1,3 +1,8 @@
+"""
+`c` module is a simple dir+init under `b`.
+
+Test `c` works in a namespace package (`b`).
+"""
 import unittest
 
 import root.b
