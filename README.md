@@ -23,7 +23,7 @@ test the following claims:
     $ pip install -r requirements.txt
     $ nox
 
-## Preliminary results
+## Raw results
 
     nox > * same_level_only(approach='pkgutil', install_command=('pip', 'install', '.'), interpreter='python2'): success
     nox > * same_level_only(approach='pkgutil', install_command=('pip', 'install', '-e', '.'), interpreter='python2'): success
@@ -153,3 +153,37 @@ test the following claims:
     nox > * uninstall__mixed_levels__mixed_module_def(approach='native', install_command=('pip', 'install', '-e', '.'), interpreter='python3'): failed
     nox > * uninstall__mixed_levels__mixed_module_def(approach='native', install_command=('python', 'setup.py', 'install'), interpreter='python3'): failed
     nox > * uninstall__mixed_levels__mixed_module_def(approach='native', install_command=('python', 'setup.py', 'develop'), interpreter='python3'): failed
+
+## Interpreted results
+
+### Basic case, vanilla namespace packages (`same_level_only` and `non_clashing_levels`)
+
+  - `root` is an empty shared namespace for `root.a` and `root.b` (split in two packages),
+    or for `root.a` and `root.b.c`
+  - `pkgutil` approach works for all install type variants, in all Python versions
+  - development and regular install work equally well
+  - in Python 2, for regular pip install method, uninstall of one package breaks the import of the other
+  - (fully) works in Python 3 (all test cases pass)
+  - developer install works in Python 2, but regular uninstall doesn't
+
+### Partially overlapping namespaces (`mixed_levels`)
+
+  - `root.b` is not empty, yet we try to overlap it with `root.b.c`
+  - (fully) works only in Python 3 for only regular pip installs, but both approaches
+
+### Overlapping namespaces, with mixed module definitions (`mixed_levels__mixed_module_def`)
+
+  - non-empty `root.b` is overlapped with `root.b.c` (as in previous case), but then also
+    with `root.b.d` (implemented in module file `d.py`) and `root.b.e` (implemented in `e/__init__.py`)
+  - (fully) works only in Python 3 for only regular pip installs and only `native` approach
+
+## Conclusions
+
+  - For full Python 2 and 3 compatibility, all stem `__init__.py` must be empty.
+
+  - Developer installs work.
+
+  - Uninstall works in Python 3 and mostly in Python 2.
+
+  - To have autocomplete on second-level packages, clashing namespaces would have to be used,
+    and those work only for native namespace packages in Python 3.
